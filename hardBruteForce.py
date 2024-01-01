@@ -14,10 +14,10 @@ def vergelijk(passwoord, password):
     return "niets"
 
 def generate_and_print_combinations(passwoord):
-    alphabet = string.ascii_letters
+    toetsenbord_tekens = string.printable 
 
-    for length in range(1, 9):
-        combo = itertools.product(alphabet, repeat=length)
+    for length in itertools.count(start=1): 
+        combo = itertools.product(toetsenbord_tekens, repeat=length)
         for item in combo:
             combination = ''.join(item)
             print(combination)
@@ -25,11 +25,9 @@ def generate_and_print_combinations(passwoord):
             antwoord = vergelijk(passwoord, secure_combo)
             if antwoord != "niets":
                 return combination
-                
-    return "niets"
-    
+
 if __name__ == "__main__":
-    passwoord = input("Geef een wachtwoord van 1 tot 8 letters: ")
+    passwoord = input("Geef een wachtwoord: ")
     secure_passwoord = to_hash(passwoord)
     antwoord = generate_and_print_combinations(secure_passwoord)
     if antwoord == "niets":
