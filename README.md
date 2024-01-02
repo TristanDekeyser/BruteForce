@@ -11,3 +11,5 @@ wachtwoordenGuesser raad alle mogelijke combinaties van grote en kleine letter v
 hardBruteForce zal alle mogelijke combinaties raden van alle 94 tekens
 
 PasswordCracker is het grote script waar alles in samen wordt gevoegd
+
+Het BruteForceAttack script is het grote script waarbij we gaan proberen een echte website te hacken. (er is toestemming gekregen om de website die hier instaat te brute forcen)

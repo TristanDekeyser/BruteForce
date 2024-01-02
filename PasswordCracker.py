@@ -88,7 +88,7 @@ if __name__ == "__main__":
         tot = stop - begin
         if juiste_pin == "niets":
             print(f"deze methode heeft er {tot} seconden over gedaan")
-            print("We hebben je pincode niet gevonden met deze methode, we gaan nu alle combinaties van lettes uittesten tot lengte 8. Druk op enter om verder te gaan.")
+            print("We hebben je pincode niet gevonden met deze methode, we gaan nu alle combinaties van letters uittesten tot lengte 8. Druk op enter om verder te gaan.")
             input()
             star = time.time()
             an = generate_and_print_combinations(securePasswoord)
